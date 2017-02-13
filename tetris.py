@@ -7,6 +7,7 @@ import copy
 def tetrisMousePressed(canvas, event):
     pass
 
+#calls appropriate function for each key press
 def tetrisKeyPressed(canvas, event):
     if (event.keysym == "r"):
             tetrisInit(canvas)
@@ -21,6 +22,7 @@ def tetrisKeyPressed(canvas, event):
             moveFallingPiece(canvas,0,+1)
         tetrisRedrawAll(canvas)
 
+#updates the game for every time unit
 def tetrisTimerFired(canvas):
     if canvas.data.isGameOver == False:
         tetrisRedrawAll(canvas)
@@ -63,6 +65,7 @@ def drawCell(canvas,row,col,color):
     cellSize,margin = canvas.data.cellSize,canvas.data.margin
     canvas.create_rectangle(cellSize*col+margin,cellSize*row+margin,cellSize*(col+1)+margin,cellSize*(row+1)+margin,fill = color,width = 4)
 
+#removes full rows and increases the score
 def removeFullRows(canvas):
     rows,cols,board,emptyColor = canvas.data.rows, canvas.data.cols,canvas.data.board,canvas.data.emptyColor
     fullRows = 0
@@ -78,6 +81,7 @@ def removeFullRows(canvas):
     canvas.data.score += int(fullRows**2.0)
     tetrisRedrawAll(canvas)
 
+#creates a new falling piece
 def newFallingPiece(canvas):
     randIndex = random.randint(0,len(canvas.data.tetrisPieces)-1)
     canvas.data.fallingPiece = canvas.data.tetrisPieces[randIndex]
@@ -108,9 +112,6 @@ def rotateFallingPiece(canvas):
     rows,cols = len(fallingPiece), len(fallingPiece[0])
     for col in xrange(cols):
         newFallingPiece+= [getColumnList(fallingPiece,cols-col-1)]
-    #for row in xrange(len(fallingPiece)):
-        #for col in xrange(len(fallingPiece[0])):
-            #newFallingPiece[col][row] = fallingPiece[row][col]
     canvas.data.fallingPiece = newFallingPiece
     newCenterRow,newCenterCol = fallingPieceCenter(canvas)
     canvas.data.fallingPieceRow += (oldCenterRow-newCenterRow)
@@ -124,6 +125,7 @@ def getColumnList(list, col):
         colList+= [list[row][col]]
     return colList
 
+#determines the center of the piece so as to appropriately rotate
 def fallingPieceCenter(canvas):
     row = canvas.data.fallingPieceRow + len(canvas.data.fallingPiece)/2
     col = canvas.data.fallingPieceCol + len(canvas.data.fallingPiece[0])/2
@@ -208,6 +210,6 @@ def tetrisRun(rows, cols):
     root.bind("<Key>", lambda event: tetrisKeyPressed(canvas, event))
     tetrisTimerFired(canvas)
     # and launch the app
-    root.mainloop()  # This call BLOCKS (so your program waits until you close the window!)
+    root.mainloop()  # This call BLOCKS (so your program waits until you close the window)
 
 tetrisRun(15,10)
