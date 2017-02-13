@@ -208,6 +208,6 @@ def tetrisRun(rows, cols):
     root.bind("<Key>", lambda event: tetrisKeyPressed(canvas, event))
     tetrisTimerFired(canvas)
     # and launch the app
-    root.mainloop()  # This call BLOCKS (so your program waits until you close the window!)
+    root.mainloop()  # This call BLOCKS (so your program waits until you close the window)
 
 tetrisRun(15,10)
