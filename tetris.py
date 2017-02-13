@@ -212,4 +212,5 @@ def tetrisRun(rows, cols):
     # and launch the app
     root.mainloop()  # This call BLOCKS (so your program waits until you close the window)
 
+#runs a tetris game with given board size
 tetrisRun(15,10)
